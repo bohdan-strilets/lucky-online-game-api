@@ -1,6 +1,6 @@
 # nodejs-project-template
 
-# RU
+# Start
 
 A small template that allows you to quickly start writing an express application. Includes a set of prerequisites, dependencies, and food packages for server-side development.
 
