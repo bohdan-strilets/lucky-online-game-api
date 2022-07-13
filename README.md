@@ -12,3 +12,5 @@ A linter has been configured to check the quality of the code.
 - npm run start:dev
 - npm run lint
 - npm run lint:fix
+
+# test
