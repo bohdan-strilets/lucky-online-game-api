@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-project-template",
+  "name": "lucky-online-game-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bohdan-strilets/nodejs-project-template.git"
+    "url": "git+https://github.com/bohdan-strilets/lucky-online-game-api.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bohdan-strilets/nodejs-project-template/issues"
+    "url": "https://github.com/bohdan-strilets/lucky-online-game-api/issues"
   },
-  "homepage": "https://github.com/bohdan-strilets/nodejs-project-template#readme",
+  "homepage": "https://github.com/bohdan-strilets/lucky-online-game-api#readme",
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
     "bcryptjs": "^2.4.3",
