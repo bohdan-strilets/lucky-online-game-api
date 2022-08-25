@@ -7,7 +7,7 @@ const signin = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    res.status(401).json({
+    return res.status(401).json({
       status: "error",
       code: 401,
       message: "Email is wrong.",
@@ -15,7 +15,7 @@ const signin = async (req, res) => {
   }
 
   if (!compareSync(password, user.password)) {
-    res.status(401).json({
+    return res.status(401).json({
       status: "error",
       code: 401,
       message: "Password is wrong.",
@@ -23,7 +23,7 @@ const signin = async (req, res) => {
   }
 
   if (!user.isVerified) {
-    res.status(401).json({
+    return res.status(401).json({
       status: "error",
       code: 401,
       message: "Account not verify.",
@@ -33,7 +33,7 @@ const signin = async (req, res) => {
   const payload = payloadGenerator(user);
   const tokens = await tokenGenerator(payload);
 
-  res
+  return res
     .cookie("refreshToken", tokens.refreshToken, {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,

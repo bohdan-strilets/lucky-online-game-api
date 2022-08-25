@@ -15,7 +15,7 @@ const signup = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user) {
-    res.status(409).json({
+    return res.status(409).json({
       status: "error",
       code: 409,
       message: `Email '${email}' in use.`,
@@ -40,7 +40,7 @@ const signup = async (req, res) => {
   const mail = confirmEmail(email, verificationToken);
   await sendEmail(mail);
 
-  res
+  return res
     .cookie("refreshToken", tokens.refreshToken, {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
