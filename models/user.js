@@ -73,7 +73,7 @@ const passwordJoiSchema = joi.object({
 });
 
 const bankJoiSchema = joi.object({
-  bank: joi.string().min(1).required(),
+  bank: joi.number().required(),
 });
 
 const changeJoiSchema = joi.object({
