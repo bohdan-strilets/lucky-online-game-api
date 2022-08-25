@@ -7,7 +7,7 @@ const { CLIENT_URL } = process.env;
 require("dotenv").config();
 const app = express();
 
-const { authRouter } = require("./routes");
+const { authRouter, userRouter } = require("./routes");
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
@@ -18,6 +18,7 @@ app.use(express.static("./public"));
 app.use(cookieParser());
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/user", userRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found." });
