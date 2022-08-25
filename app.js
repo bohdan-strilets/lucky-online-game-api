@@ -1,6 +1,7 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const { CLIENT_URL } = process.env;
 require("dotenv").config();
@@ -13,7 +14,8 @@ const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 app.use(logger(formatsLogger));
 app.use(cors({ origin: CLIENT_URL, credentials: true }));
 app.use(express.json());
-app.use(express.static("/public"));
+app.use(express.static("./public"));
+app.use(cookieParser());
 
 app.use("/api/v1/auth", authRouter);
 

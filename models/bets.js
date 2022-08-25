@@ -40,10 +40,7 @@ const betsSchema = Schema(
 
 const isWonJoiSchema = joi.object({
   isWon: joi.bool().required("The is won field is required."),
-  winningAmount: joi
-    .number()
-    .min(1, "The minimum allowed value is exactly 1.")
-    .required("The winning amount field is required."),
+  winningAmount: joi.number().min(1).required(),
 });
 
 const Bets = model("bets", betsSchema);
