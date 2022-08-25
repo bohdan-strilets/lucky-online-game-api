@@ -18,6 +18,7 @@ const repeatVerification = async (req, res) => {
   const verificationToken = v4();
   const mail = confirmEmail(email, verificationToken);
   await sendEmail(mail);
+  await User.findByIdAndUpdate(user._id, { verificationToken });
 
   return res.json({
     status: "ok",

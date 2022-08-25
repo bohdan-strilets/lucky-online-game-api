@@ -7,7 +7,6 @@ const {
   passwordJoiSchema,
   bankJoiSchema,
   changeJoiSchema,
-  verificationJoiSchema,
 } = require("../models/user");
 
 const router = express.Router();
@@ -53,7 +52,7 @@ router.get("/verification/:verificationToken", ctrlWrapper(ctrl.verifyAccount));
 
 router.post(
   "/verification",
-  validation(verificationJoiSchema),
+  validation(emailJoiSchema),
   ctrlWrapper(ctrl.repeatVerification)
 );
 
