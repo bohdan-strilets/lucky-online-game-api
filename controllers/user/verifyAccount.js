@@ -1,5 +1,7 @@
 const { User } = require("../../models");
 
+const { CLIENT_URL } = process.env;
+
 const verifyAccount = async (req, res) => {
   const { verificationToken } = req.params;
   const user = await User.findOne({ verificationToken });
@@ -17,7 +19,7 @@ const verifyAccount = async (req, res) => {
     verificationToken: null,
   });
 
-  res.json({
+  return res.redirect(CLIENT_URL).json({
     status: "ok",
     code: 200,
     message: "Verification successful.",
