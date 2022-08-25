@@ -38,6 +38,14 @@ const betsSchema = Schema(
   { versionKey: false, timestamps: true }
 );
 
+const betJoiSchema = joi.object({
+  type: joi.string().required(),
+  number: joi.number().required(),
+  color: joi.string().valid("red", "black").required(),
+  betAmount: joi.number().min(1).required(),
+  coefficient: joi.number().min(1).required(),
+});
+
 const isWonJoiSchema = joi.object({
   isWon: joi.bool().required("The is won field is required."),
   winningAmount: joi.number().min(1).required(),
@@ -47,5 +55,6 @@ const Bets = model("bets", betsSchema);
 
 module.exports = {
   Bets,
+  betJoiSchema,
   isWonJoiSchema,
 };
