@@ -41,7 +41,7 @@ const signup = async (req, res) => {
   await sendEmail(mail);
 
   res
-    .cookie("accessToken", tokens.accessToken, {
+    .cookie("refreshToken", tokens.refreshToken, {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
     })

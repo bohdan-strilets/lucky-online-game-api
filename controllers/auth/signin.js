@@ -34,7 +34,7 @@ const signin = async (req, res) => {
   const tokens = await tokenGenerator(payload);
 
   res
-    .cookie("accessToken", tokens.accessToken, {
+    .cookie("refreshToken", tokens.refreshToken, {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
     })
