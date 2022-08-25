@@ -78,7 +78,7 @@ const bankJoiSchema = joi.object({
 
 const changeJoiSchema = joi.object({
   name: joi.string().min(3).max(15),
-  nickname: joi.string().min().max(),
+  nickname: joi.string().min(3).max(20),
   dateBirth: joi.string(),
   gender: joi.string().valid("other", "man", "woman"),
 });

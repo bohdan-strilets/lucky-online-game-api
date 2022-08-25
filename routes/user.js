@@ -56,4 +56,6 @@ router.post(
   ctrlWrapper(ctrl.repeatVerification)
 );
 
+router.delete("/delete", auth, ctrlWrapper(ctrl.deleteAccount));
+
 module.exports = router;
