@@ -7,7 +7,14 @@ const { CLIENT_URL } = process.env;
 require("dotenv").config();
 const app = express();
 
-const { authRouter, userRouter, betsRouter, levelRouter } = require("./routes");
+const {
+  authRouter,
+  userRouter,
+  betsRouter,
+  levelRouter,
+  statisticsRouter,
+} = require("./routes");
+
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
@@ -20,6 +27,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/bets", betsRouter);
 app.use("/api/v1/level", levelRouter);
+app.use("/api/v1/statistics", statisticsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found." });
