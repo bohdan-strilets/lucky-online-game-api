@@ -2,16 +2,21 @@ const express = require("express");
 
 const { bets: ctrl } = require("../controllers");
 const { validation, ctrlWrapper, auth } = require("../middlewares");
-const { betJoiSchema, isWonJoiSchema } = require("../models/bets");
+const { betJoiSchema, isWonJoiSchema } = require("../models/bet");
 
 const router = express.Router();
 
 router.get("/", auth, ctrlWrapper(ctrl.getAll));
 
-router.get("/:betsId", auth, ctrlWrapper(ctrl.getOne));
+router.get("/:betId", auth, ctrlWrapper(ctrl.getOne));
 
 router.post("/", auth, validation(betJoiSchema), ctrlWrapper(ctrl.createBet));
 
-router.put("/", auth, validation(isWonJoiSchema), ctrlWrapper(ctrl.changeBet));
+router.put(
+  "/:betId",
+  auth,
+  validation(isWonJoiSchema),
+  ctrlWrapper(ctrl.changeBet)
+);
 
 module.exports = router;

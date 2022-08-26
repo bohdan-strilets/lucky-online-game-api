@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 const joi = require("joi");
 
-const betsSchema = Schema(
+const betSchema = Schema(
   {
     owner: {
       type: Schema.Types.ObjectId,
@@ -48,13 +48,12 @@ const betJoiSchema = joi.object({
 
 const isWonJoiSchema = joi.object({
   isWon: joi.bool().required("The is won field is required."),
-  winningAmount: joi.number().min(1).required(),
 });
 
-const Bets = model("bets", betsSchema);
+const Bet = model("bets", betSchema);
 
 module.exports = {
-  Bets,
+  Bet,
   betJoiSchema,
   isWonJoiSchema,
 };
