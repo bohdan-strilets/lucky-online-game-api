@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/", auth, ctrlWrapper(ctrl.getInfo));
 
 router.patch(
-  "/",
+  "/time",
   auth,
   validation(timeJoiSchema),
   ctrlWrapper(ctrl.changeTime)
