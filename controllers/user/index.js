@@ -7,6 +7,8 @@ const getCurrent = require("./getCurrent");
 const repeatVerification = require("./repeatVerification");
 const verifyAccount = require("./verifyAccount");
 const deleteAccount = require("./deleteAccount");
+const sendResetPasswordEmail = require("./sendResetPasswordEmail");
+const resetPassword = require("./resetPassword");
 
 module.exports = {
   changeAccount,
@@ -18,4 +20,6 @@ module.exports = {
   repeatVerification,
   verifyAccount,
   deleteAccount,
+  sendResetPasswordEmail,
+  resetPassword,
 };

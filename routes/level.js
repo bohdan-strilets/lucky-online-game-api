@@ -13,21 +13,21 @@ const router = express.Router();
 router.get("/", auth, ctrlWrapper(ctrl.getInfo));
 
 router.patch(
-  "/level",
+  "/change-level",
   auth,
   validation(levelJoiSchema),
   ctrlWrapper(ctrl.changeLevel)
 );
 
 router.patch(
-  "/experience",
+  "/change-experience",
   auth,
   validation(experienceJoiSchema),
   ctrlWrapper(ctrl.changeExperience)
 );
 
 router.patch(
-  "/rank",
+  "/change-rank",
   auth,
   validation(rankJoiSchema),
   ctrlWrapper(ctrl.changeRank)

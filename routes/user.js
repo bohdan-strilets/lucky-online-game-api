@@ -11,51 +11,62 @@ const {
 
 const router = express.Router();
 
-router.get("/current", auth, ctrlWrapper(ctrl.getCurrent));
+router.get("/get-current", auth, ctrlWrapper(ctrl.getCurrent));
 
 router.patch(
-  "/email",
+  "/change-email",
   auth,
   validation(emailJoiSchema),
   ctrlWrapper(ctrl.changeEmail)
 );
 
 router.patch(
-  "/password",
+  "/change-password",
   auth,
   validation(passwordJoiSchema),
   ctrlWrapper(ctrl.changePassword)
 );
 
 router.patch(
-  "/bank",
+  "/change-bank",
   auth,
   validation(bankJoiSchema),
   ctrlWrapper(ctrl.changeBank)
 );
 
 router.patch(
-  "/avatar",
+  "/change-avatar",
   auth,
   upload.single("avatar"),
   ctrlWrapper(ctrl.changeAvatar)
 );
 
 router.put(
-  "/profile",
+  "/change-profile",
   auth,
   validation(changeJoiSchema),
   ctrlWrapper(ctrl.changeAccount)
 );
 
-router.get("/verification/:verificationToken", ctrlWrapper(ctrl.verifyAccount));
+router.get(
+  "/verification-email/:verificationToken",
+  ctrlWrapper(ctrl.verifyAccount)
+);
 
 router.post(
-  "/verification",
+  "/repeat-verification",
   validation(emailJoiSchema),
   ctrlWrapper(ctrl.repeatVerification)
 );
 
-router.delete("/delete", auth, ctrlWrapper(ctrl.deleteAccount));
+router.delete("/delete-account", auth, ctrlWrapper(ctrl.deleteAccount));
+
+router.post(
+  "/send-password-email",
+  validation(emailJoiSchema),
+  ctrlWrapper(ctrl.sendResetPasswordEmail)
+);
+
+router.get("/reset-password", validation(), ctrlWrapper(ctrl.resetPassword));
 
 module.exports = router;
