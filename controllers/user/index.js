@@ -10,6 +10,7 @@ const deleteAccount = require("./deleteAccount");
 const sendResetPasswordEmail = require("./sendResetPasswordEmail");
 const resetPassword = require("./resetPassword");
 const createSession = require("./createSession");
+const deleteSession = require("./deleteSession");
 
 module.exports = {
   changeAccount,
@@ -24,4 +25,5 @@ module.exports = {
   sendResetPasswordEmail,
   resetPassword,
   createSession,
+  deleteSession,
 };

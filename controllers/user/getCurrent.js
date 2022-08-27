@@ -14,6 +14,8 @@ const getCurrent = async (req, res) => {
       bank: user.bank,
       avatarURL: user.avatarURL,
       isVerified: user.isVerified,
+      complexity: user.complexity,
+      inGame: user.inGame,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     },

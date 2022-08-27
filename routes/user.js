@@ -82,4 +82,6 @@ router.patch(
   ctrlWrapper(ctrl.createSession)
 );
 
+router.delete("/delete-session", auth, ctrlWrapper(ctrl.deleteSession));
+
 module.exports = router;
