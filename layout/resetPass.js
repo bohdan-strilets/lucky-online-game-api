@@ -1,4 +1,4 @@
-const { API_URL } = process.env;
+const { CLIENT_URL } = process.env;
 
 const resetPass = (email, name) => {
   const mail = {
@@ -12,7 +12,7 @@ const resetPass = (email, name) => {
         <br />
         <p>If you have not applied for a password reset, please ignore this email.<p/>
         <br />
-        <a target="_blank" href="${API_URL}/api/v1/user/verification/${verificationToken}">Restore password</a>
+        <a target="_blank" href="${CLIENT_URL}/reset-password">Restore password</a>
       </div>
     `,
   };

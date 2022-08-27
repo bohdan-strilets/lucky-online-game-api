@@ -7,6 +7,7 @@ const {
   passwordJoiSchema,
   bankJoiSchema,
   changeJoiSchema,
+  resetPasswordJoiSchema,
 } = require("../models/user");
 
 const router = express.Router();
@@ -67,6 +68,10 @@ router.post(
   ctrlWrapper(ctrl.sendResetPasswordEmail)
 );
 
-router.get("/reset-password", validation(), ctrlWrapper(ctrl.resetPassword));
+router.post(
+  "/reset-password",
+  validation(resetPasswordJoiSchema),
+  ctrlWrapper(ctrl.resetPassword)
+);
 
 module.exports = router;

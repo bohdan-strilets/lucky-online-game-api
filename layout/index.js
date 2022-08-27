@@ -1,7 +1,7 @@
 const confirmEmail = require("./confirmEmail");
-const resetPassword = require("./resetPass");
+const resetPass = require("./resetPass");
 
 module.exports = {
   confirmEmail,
-  resetPassword,
+  resetPass,
 };

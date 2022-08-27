@@ -83,7 +83,10 @@ const changeJoiSchema = joi.object({
   gender: joi.string().valid("other", "man", "woman"),
 });
 
-
+const resetPasswordJoiSchema = joi.object({
+  email: joi.string().email().required(),
+  password: joi.string().min(6).max(12).required(),
+});
 
 const User = model("user", userSchema);
 
@@ -95,4 +98,5 @@ module.exports = {
   passwordJoiSchema,
   bankJoiSchema,
   changeJoiSchema,
+  resetPasswordJoiSchema,
 };
