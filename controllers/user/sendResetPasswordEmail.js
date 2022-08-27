@@ -1,6 +1,6 @@
 const { User } = require("../../models");
 const { sendEmail } = require("../../helpers");
-const { resetPass } = require("../../layout");
+const { resetPass } = require("../../layoutEmails");
 
 const sendResetPasswordEmail = async (req, res) => {
   const { email } = req.body;

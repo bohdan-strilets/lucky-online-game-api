@@ -19,11 +19,7 @@ const verifyAccount = async (req, res) => {
     verificationToken: null,
   });
 
-  return res.redirect(CLIENT_URL).json({
-    status: "ok",
-    code: 200,
-    message: "Verification successful.",
-  });
+  return res.redirect(CLIENT_URL);
 };
 
 module.exports = verifyAccount;

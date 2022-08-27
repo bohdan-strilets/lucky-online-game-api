@@ -48,6 +48,14 @@ const userSchema = Schema(
       type: String,
       required: [true, "The verification token field is required."],
     },
+    complexity: {
+      type: String,
+      default: null,
+    },
+    inGame: {
+      type: Boolean,
+      default: false,
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -88,6 +96,10 @@ const resetPasswordJoiSchema = joi.object({
   password: joi.string().min(6).max(12).required(),
 });
 
+const complexityJoiSchema = joi.object({
+  complexity: joi.string().valid("low", "medium", "high").required(),
+});
+
 const User = model("user", userSchema);
 
 module.exports = {
@@ -99,4 +111,5 @@ module.exports = {
   bankJoiSchema,
   changeJoiSchema,
   resetPasswordJoiSchema,
+  complexityJoiSchema,
 };

@@ -10,7 +10,7 @@ const confirmEmail = (email, verificationToken) => {
         <br />
         <p>Thank you for yusing our service.</p>
         <br />
-        <a target="_blank" href="${API_URL}/api/v1/user/verification/${verificationToken}">Finish registration</a>
+        <a target="_blank" href="${API_URL}/api/v1/user/verification-email/${verificationToken}">Finish registration</a>
       </div>
     `,
   };

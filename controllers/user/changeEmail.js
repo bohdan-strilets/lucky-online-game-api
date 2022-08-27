@@ -1,6 +1,6 @@
 const { User } = require("../../models");
 const { sendEmail } = require("../../helpers");
-const { confirmEmail } = require("../../layout");
+const { confirmEmail } = require("../../layoutEmails");
 const { v4 } = require("uuid");
 
 const changeEmail = async (req, res) => {

@@ -1,5 +1,5 @@
-const { User, Level, Statistics } = require("../../models");
-const { confirmEmail } = require("../../layout");
+const { User } = require("../../models");
+const { confirmEmail } = require("../../layoutEmails");
 const {
   sendEmail,
   payloadGenerator,
@@ -40,9 +40,6 @@ const signup = async (req, res) => {
   const mail = confirmEmail(email, verificationToken);
   await sendEmail(mail);
 
-  const userLevel = await Level.create({ owner: result._id });
-  const userStatistics = await Statistics.create({ owner: result._id });
-
   return res
     .cookie("refreshToken", tokens.refreshToken, {
       httpOnly: true,
@@ -59,8 +56,6 @@ const signup = async (req, res) => {
         avatarURL: result.avatarURL,
         isVerified: result.isVerified,
       },
-      userLevel,
-      userStatistics,
     });
 };
 

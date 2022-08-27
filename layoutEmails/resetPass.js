@@ -8,7 +8,7 @@ const resetPass = (email, name) => {
       <div>
         <h1>Hello ${name}</h1>
         <br />
-        <p>Нou received this email because you are trying to recover your password to the site ${API_URL}</p>
+        <p>Нou received this email because you are trying to recover your password to the site ${CLIENT_URL}</p>
         <br />
         <p>If you have not applied for a password reset, please ignore this email.<p/>
         <br />
