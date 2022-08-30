@@ -11,6 +11,7 @@ const sendResetPasswordEmail = require("./sendResetPasswordEmail");
 const resetPassword = require("./resetPassword");
 const createSession = require("./createSession");
 const deleteSession = require("./deleteSession");
+const changeComplexity = require("./changeComplexity");
 
 module.exports = {
   changeAccount,
@@ -26,4 +27,5 @@ module.exports = {
   resetPassword,
   createSession,
   deleteSession,
+  changeComplexity,
 };

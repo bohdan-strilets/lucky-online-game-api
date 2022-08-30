@@ -82,6 +82,13 @@ router.patch(
   ctrlWrapper(ctrl.createSession)
 );
 
+router.patch(
+  "/change-complexity",
+  auth,
+  validation(complexityJoiSchema),
+  ctrlWrapper(ctrl.changeComplexity)
+);
+
 router.delete("/delete-session", auth, ctrlWrapper(ctrl.deleteSession));
 
 module.exports = router;

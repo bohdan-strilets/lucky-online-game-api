@@ -3,7 +3,6 @@ const logger = require("morgan");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
-const { CLIENT_URL } = process.env;
 require("dotenv").config();
 const app = express();
 
@@ -18,7 +17,7 @@ const {
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
-app.use(cors({ origin: CLIENT_URL, credentials: true }));
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
 app.use(express.static("./public"));
 app.use(cookieParser());

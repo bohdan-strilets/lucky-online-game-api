@@ -44,10 +44,19 @@ const signin = async (req, res) => {
       code: 200,
       tokens,
       user: {
+        _id: user._id,
         name: user.name,
+        nickname: user.nickname,
         email: user.email,
+        dateBirth: user.dateBirth,
+        gender: user.gender,
+        bank: user.bank,
         avatarURL: user.avatarURL,
         isVerified: user.isVerified,
+        complexity: user.complexity,
+        inGame: user.inGame,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
       },
     });
 };

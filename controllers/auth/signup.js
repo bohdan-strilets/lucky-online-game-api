@@ -51,10 +51,19 @@ const signup = async (req, res) => {
       code: 201,
       tokens,
       user: {
+        _id: result._id,
         name: result.name,
+        nickname: result.nickname,
         email: result.email,
+        dateBirth: result.dateBirth,
+        gender: result.gender,
+        bank: result.bank,
         avatarURL: result.avatarURL,
         isVerified: result.isVerified,
+        complexity: result.complexity,
+        inGame: result.inGame,
+        createdAt: result.createdAt,
+        updatedAt: result.updatedAt,
       },
     });
 };
