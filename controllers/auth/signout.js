@@ -7,7 +7,7 @@ const signout = async (req, res) => {
   const { refreshToken } = req.cookies;
 
   if (!refreshToken) {
-    return res.code(401).json({
+    return res.status(401).json({
       status: "error",
       code: 401,
       message: "Not authorized.",
@@ -18,7 +18,7 @@ const signout = async (req, res) => {
   const tokenFromDB = await Token.findOne({ owner: userData.id });
 
   if (!userData || !tokenFromDB) {
-    return res.code(401).json({
+    return res.status(401).json({
       status: "error",
       code: 401,
       message: "Not authorized.",

@@ -8,7 +8,7 @@ const resetPassword = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    return res.code(404).json({
+    return res.status(404).json({
       status: "error",
       code: 404,
       message: "Invalid email. There is no user with this email address.",

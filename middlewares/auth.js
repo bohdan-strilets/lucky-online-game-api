@@ -17,6 +17,15 @@ const auth = async (req, res, next) => {
     }
 
     const { email } = jwt.verify(token, ACCESS_TOKEN_KEY);
+
+    if (!email) {
+      return res.status(401).json({
+        status: "error",
+        code: 401,
+        message: "Not authorized",
+      });
+    }
+
     const user = await User.findOne({ email });
 
     if (!user) {

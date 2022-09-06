@@ -10,8 +10,11 @@ const deleteAccount = async (req, res) => {
 
   await User.findByIdAndRemove(user._id);
   await Token.findByIdAndRemove(tokens._id);
-  await Level.findByIdAndRemove(level._id);
-  await Statistics.findByIdAndRemove(statistics._id);
+
+  if (level && statistics) {
+    await Level.findByIdAndRemove(level._id);
+    await Statistics.findByIdAndRemove(statistics._id);
+  }
 
   if (bets) {
     await Bet.deleteMany({ owner: user._id });
