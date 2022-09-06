@@ -9,18 +9,18 @@ const auth = async (req, res, next) => {
 
   try {
     if (bearer !== "Bearer") {
-      res.status(401).json({
+      return res.status(401).json({
         status: "error",
         code: 401,
         message: "Not authorized.",
       });
     }
 
-    const { id } = jwt.verify(token, ACCESS_TOKEN_KEY);
-    const user = await User.findById(id);
+    const { email } = jwt.verify(token, ACCESS_TOKEN_KEY);
+    const user = await User.findOne({ email });
 
     if (!user) {
-      res.status(401).json({
+      return res.status(401).json({
         status: "error",
         code: 401,
         message: "Not authorized",
@@ -28,7 +28,7 @@ const auth = async (req, res, next) => {
     }
 
     if (!user.isVerified) {
-      res.status(400).json({
+      return res.status(400).json({
         status: "error",
         code: 400,
         message: "Email not activated.",

@@ -89,6 +89,8 @@ router.patch(
   ctrlWrapper(ctrl.changeComplexity)
 );
 
+router.get("/refresh-user", ctrlWrapper(ctrl.refreshUser));
+
 router.delete("/delete-session", auth, ctrlWrapper(ctrl.deleteSession));
 
 module.exports = router;

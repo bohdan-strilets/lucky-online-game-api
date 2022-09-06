@@ -7,7 +7,7 @@ const getInfo = async (req, res) => {
   return res.json({
     status: "ok",
     code: 200,
-    statistics: result,
+    level: result,
   });
 };
 

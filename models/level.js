@@ -32,10 +32,6 @@ const levelSchema = Schema(
   { versionKey: false, timestamps: true }
 );
 
-const levelJoiSchema = joi.object({
-  level: joi.number().min(1).max(1).required(),
-});
-
 const experienceJoiSchema = joi.object({
   experience: joi.number().min(75).max(290).required(),
 });
@@ -58,7 +54,6 @@ const Level = model("level", levelSchema);
 
 module.exports = {
   Level,
-  levelJoiSchema,
   experienceJoiSchema,
   rankJoiSchema,
 };

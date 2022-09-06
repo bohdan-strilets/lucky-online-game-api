@@ -2,22 +2,13 @@ const express = require("express");
 
 const { level: ctrl } = require("../controllers");
 const { validation, ctrlWrapper, auth } = require("../middlewares");
-const {
-  levelJoiSchema,
-  rankJoiSchema,
-  experienceJoiSchema,
-} = require("../models/level");
+const { rankJoiSchema, experienceJoiSchema } = require("../models/level");
 
 const router = express.Router();
 
 router.get("/", auth, ctrlWrapper(ctrl.getInfo));
 
-router.patch(
-  "/change-level",
-  auth,
-  validation(levelJoiSchema),
-  ctrlWrapper(ctrl.changeLevel)
-);
+router.patch("/change-level", auth, ctrlWrapper(ctrl.changeLevel));
 
 router.patch(
   "/change-experience",

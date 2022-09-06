@@ -17,7 +17,7 @@ const changeExperience = async (req, res) => {
   return res.json({
     status: "ok",
     code: 200,
-    level: result.experience,
+    experience: result.experience,
   });
 };
 

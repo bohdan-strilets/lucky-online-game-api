@@ -12,6 +12,7 @@ const resetPassword = require("./resetPassword");
 const createSession = require("./createSession");
 const deleteSession = require("./deleteSession");
 const changeComplexity = require("./changeComplexity");
+const refreshUser = require("./refreshUser");
 
 module.exports = {
   changeAccount,
@@ -28,4 +29,5 @@ module.exports = {
   createSession,
   deleteSession,
   changeComplexity,
+  refreshUser,
 };

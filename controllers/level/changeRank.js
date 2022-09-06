@@ -15,7 +15,7 @@ const changeRank = async (req, res) => {
   return res.json({
     status: "ok",
     code: 200,
-    level: result.rank,
+    rank: result.rank,
   });
 };
 
