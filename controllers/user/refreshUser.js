@@ -27,7 +27,7 @@ const refreshUser = async (req, res) => {
   }
 
   const payload = payloadGenerator(userData);
-  const tokens = await tokenGenerator(payload);
+  const tokens = await tokenGenerator({ ...payload, id: tokenFromDB.owner });
 
   return res
     .cookie("refreshToken", tokens.refreshToken, {

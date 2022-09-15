@@ -8,7 +8,7 @@ const sendResetPasswordEmail = async (req, res) => {
   const emailDatabase = await User.findOne({ email });
 
   if (!emailDatabase) {
-    return res.json({
+    return res.status(400).json({
       status: "error",
       code: 400,
       message: "Email is wrong. Such a user does not exist.",

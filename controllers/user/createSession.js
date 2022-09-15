@@ -1,15 +1,12 @@
 const { User, Level, Statistics } = require("../../models");
 
 const createSession = async (req, res) => {
-  const { complexity } = req.body;
+  const { complexity, bank } = req.body;
   const { _id } = req.user;
 
   const result = await User.findByIdAndUpdate(
     _id,
-    {
-      complexity,
-      inGame: true,
-    },
+    { bank, complexity, inGame: true },
     { new: true }
   );
 
@@ -23,6 +20,7 @@ const createSession = async (req, res) => {
       name: result.name,
       email: result.email,
       complexity: result.complexity,
+      bank: result.bank,
       inGame: result.inGame,
     },
     userLevel,

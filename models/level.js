@@ -9,7 +9,7 @@ const levelSchema = Schema(
     },
     level: {
       type: Number,
-      default: 0,
+      default: 1,
     },
     experience: {
       type: Number,
@@ -33,7 +33,7 @@ const levelSchema = Schema(
 );
 
 const experienceJoiSchema = joi.object({
-  experience: joi.number().min(75).max(290).required(),
+  experience: joi.number().min(10).max(290).required(),
 });
 
 const rankJoiSchema = joi.object({

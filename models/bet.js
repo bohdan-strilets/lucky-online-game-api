@@ -41,7 +41,7 @@ const betSchema = Schema(
 
 const betJoiSchema = joi.object({
   type: joi.string().required(),
-  number: joi.number(),
+  number: joi.number().allow(null),
   color: joi.string().allow(null),
   betAmount: joi.number().min(1).required(),
   coefficient: joi.number().min(1).required(),

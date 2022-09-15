@@ -12,7 +12,7 @@ const resetPass = (email, name) => {
         <br />
         <p>If you have not applied for a password reset, please ignore this email.<p/>
         <br />
-        <a target="_blank" href="${CLIENT_URL}/lucky-online-game/lost-password">Restore password</a>
+        <a target="_blank" href="${CLIENT_URL}/lucky-online-game/reset-password">Restore password</a>
       </div>
     `,
   };

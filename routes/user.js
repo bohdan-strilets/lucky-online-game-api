@@ -43,7 +43,7 @@ router.patch(
   ctrlWrapper(ctrl.changeAvatar)
 );
 
-router.put(
+router.patch(
   "/change-profile",
   auth,
   validation(changeJoiSchema),

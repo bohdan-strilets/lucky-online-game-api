@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } = process.env;
 
 const tokenGenerator = async (payload) => {
-  const accessToken = jwt.sign(payload, ACCESS_TOKEN_KEY, { expiresIn: "30m" });
+  const accessToken = jwt.sign(payload, ACCESS_TOKEN_KEY, { expiresIn: "1h" });
   const refreshToken = jwt.sign(payload, REFRESH_TOKEN_KEY, {
     expiresIn: "30d",
   });

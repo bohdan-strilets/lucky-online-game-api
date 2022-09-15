@@ -6,6 +6,7 @@ const deleteSession = async (req, res) => {
   await User.findByIdAndUpdate(_id, {
     complexity: null,
     inGame: false,
+    bank: 0,
   });
 
   const level = await Level.findOne({ owner: _id });

@@ -1,15 +1,10 @@
 const { Schema, model } = require("mongoose");
-const joi = require("joi");
 
 const statisticsSchema = Schema(
   {
     owner: {
       type: Schema.Types.ObjectId,
       ref: "user",
-    },
-    timeInGame: {
-      type: Number,
-      default: 0,
     },
     totalBets: {
       type: Number,
@@ -35,13 +30,8 @@ const statisticsSchema = Schema(
   { versionKey: false, timestamps: true }
 );
 
-const timeJoiSchema = joi.object({
-  timeInGame: joi.number().min(1).required(),
-});
-
 const Statistics = model("statistics", statisticsSchema);
 
 module.exports = {
   Statistics,
-  timeJoiSchema,
 };

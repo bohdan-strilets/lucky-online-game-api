@@ -20,14 +20,14 @@ const createBet = async (req, res) => {
     $inc: {
       totalBets: 1,
       moneySpent: bet.betAmount,
-      lostBets,
     },
+    lostBets,
   });
 
   return res.status(201).json({
     status: "ok",
     code: 201,
-    Bet: result,
+    bet: result,
   });
 };
 

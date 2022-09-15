@@ -98,6 +98,7 @@ const resetPasswordJoiSchema = joi.object({
 
 const complexityJoiSchema = joi.object({
   complexity: joi.string().valid("low", "medium", "high").required(),
+  bank: joi.number().required(),
 });
 
 const User = model("user", userSchema);
