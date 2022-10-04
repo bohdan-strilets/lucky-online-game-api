@@ -47,8 +47,12 @@ const auth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    if (error.message === "invalid signature") {
-      error.status = 401;
+    if (error.message === "jwt expired") {
+      return res.status(401).json({
+        status: "error",
+        code: 401,
+        message: "Not authorized",
+      });
     }
     next(error);
   }

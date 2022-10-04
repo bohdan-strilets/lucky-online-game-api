@@ -13,6 +13,11 @@ const createSession = async (req, res) => {
   const userLevel = await Level.create({ owner: result._id });
   const userStatistics = await Statistics.create({ owner: result._id });
 
+  await User.findByIdAndUpdate(_id, {
+    level: userLevel._id,
+    statistics: userStatistics._id,
+  });
+
   return res.json({
     status: "ok",
     code: 200,

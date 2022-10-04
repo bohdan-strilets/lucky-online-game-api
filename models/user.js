@@ -56,6 +56,14 @@ const userSchema = Schema(
       type: Boolean,
       default: false,
     },
+    level: {
+      type: Schema.Types.ObjectId,
+      ref: "level",
+    },
+    statistics: {
+      type: Schema.Types.ObjectId,
+      ref: "statistics",
+    },
   },
   { versionKey: false, timestamps: true }
 );

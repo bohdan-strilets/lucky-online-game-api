@@ -9,16 +9,10 @@ const changeAccount = async (req, res) => {
     status: "ok",
     code: 200,
     user: {
-      _id: result._id,
       name: result.name,
       nickname: result.nickname,
-      email: result.email,
       dateBirth: result.dateBirth,
       gender: result.gender,
-      bank: result.bank,
-      avatarURL: result.avatarURL,
-      isVerified: result.isVerified,
-      createdAt: result.createdAt,
       updatedAt: result.updatedAt,
     },
   });

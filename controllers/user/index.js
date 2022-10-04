@@ -13,6 +13,7 @@ const createSession = require("./createSession");
 const deleteSession = require("./deleteSession");
 const changeComplexity = require("./changeComplexity");
 const refreshUser = require("./refreshUser");
+const getAllUsers = require("./getAllUsers");
 
 module.exports = {
   changeAccount,
@@ -30,4 +31,5 @@ module.exports = {
   deleteSession,
   changeComplexity,
   refreshUser,
+  getAllUsers,
 };

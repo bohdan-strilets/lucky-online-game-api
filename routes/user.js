@@ -93,4 +93,6 @@ router.get("/refresh-user", ctrlWrapper(ctrl.refreshUser));
 
 router.delete("/delete-session", auth, ctrlWrapper(ctrl.deleteSession));
 
+router.get("/get-all-users", auth, ctrlWrapper(ctrl.getAllUsers));
+
 module.exports = router;
