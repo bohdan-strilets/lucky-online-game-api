@@ -1,12 +1,9 @@
-const { Bet } = require("../../models");
+const { Store } = require("../../models");
 
 const getOne = async (req, res) => {
-  const { betId } = req.params;
+  const { itemId } = req.params;
 
-  const result = await Bet.findById(betId).populate(
-    "owner",
-    "_id name avatarURL"
-  );
+  const result = await Store.findById(itemId);
 
   if (!result) {
     return res.status(404).json({
@@ -19,7 +16,7 @@ const getOne = async (req, res) => {
   return res.json({
     status: "ok",
     code: 200,
-    bet: result,
+    item: result,
   });
 };
 

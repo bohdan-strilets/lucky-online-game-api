@@ -14,6 +14,7 @@ const {
   betsRouter,
   levelRouter,
   statisticsRouter,
+  storeRouter,
 } = require("./routes");
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
@@ -29,6 +30,7 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/bets", betsRouter);
 app.use("/api/v1/level", levelRouter);
 app.use("/api/v1/statistics", statisticsRouter);
+app.use("/api/v1/store", storeRouter);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

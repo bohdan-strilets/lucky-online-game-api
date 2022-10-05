@@ -64,6 +64,9 @@ const userSchema = Schema(
       type: Schema.Types.ObjectId,
       ref: "statistics",
     },
+    store: {
+      type: Array,
+    },
   },
   { versionKey: false, timestamps: true }
 );

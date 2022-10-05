@@ -3,6 +3,7 @@ const user = require("./user");
 const bets = require("./bets");
 const level = require("./level");
 const statistics = require("./statistics");
+const store = require("./store");
 
 module.exports = {
   auth,
@@ -10,4 +11,5 @@ module.exports = {
   bets,
   level,
   statistics,
+  store,
 };

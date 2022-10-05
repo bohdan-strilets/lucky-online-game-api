@@ -1,0 +1,125 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.1.0",
+    "title": "Lucky online-game API",
+    "description": "Documentation for the online game.",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "http://localhost:5000" }],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorizarion endpoints"
+    },
+    {
+      "name": "User",
+      "description": "User info endpoints"
+    },
+    {
+      "name": "Bets",
+      "description": "Bets endpoints"
+    },
+    {
+      "name": "Level",
+      "description": "Level endpoints"
+    },
+    {
+      "name": "Statistics",
+      "description": "Statistics endpoints"
+    }
+  ],
+  "paths": {
+    "/api/v1/auth/signup": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "parameters": [],
+        "security": [],
+        "requestBody": {
+          "description": "Registration object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "response": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email in use",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["email", "name", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Boby"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password (6 to 12 characters)",
+            "example": "qwe123"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "tokens": {
+            "accessToken": { "type": "string" },
+            "refreshToken": { "type": "string" }
+          },
+          "user": {
+            "_id": { "type": "string" },
+            "name": { "type": "string" },
+            "nickname": { "type": "string" },
+            "email": { "type": "string", "format": "email" },
+            "dateBirth": { "type": "string" },
+            "gender": { "type": "string" },
+            "bank": { "type": "number" },
+            "avatarURL": { "type": "string" },
+            "isVerified": { "type": "boolean" },
+            "complexity": { "type": "string" },
+            "inGame": { "type": "boolean" },
+            "createdAt": { "type": "string" },
+            "updatedAt": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

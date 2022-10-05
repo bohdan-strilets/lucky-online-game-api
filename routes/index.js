@@ -3,6 +3,7 @@ const userRouter = require("./user");
 const betsRouter = require("./bets");
 const levelRouter = require("./level");
 const statisticsRouter = require("./statistics");
+const storeRouter = require("./store");
 
 module.exports = {
   authRouter,
@@ -10,4 +11,5 @@ module.exports = {
   betsRouter,
   levelRouter,
   statisticsRouter,
+  storeRouter,
 };
