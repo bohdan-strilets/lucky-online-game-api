@@ -55,6 +55,7 @@ const signin = async (req, res) => {
         isVerified: user.isVerified,
         complexity: user.complexity,
         inGame: user.inGame,
+        products: user.products,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       },

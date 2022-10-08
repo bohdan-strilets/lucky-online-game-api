@@ -9,6 +9,7 @@ const {
   changeJoiSchema,
   resetPasswordJoiSchema,
   complexityJoiSchema,
+  buyItemJoiSchema,
 } = require("../models/user");
 
 const router = express.Router();
@@ -94,5 +95,19 @@ router.get("/refresh-user", ctrlWrapper(ctrl.refreshUser));
 router.delete("/delete-session", auth, ctrlWrapper(ctrl.deleteSession));
 
 router.get("/get-all-users", auth, ctrlWrapper(ctrl.getAllUsers));
+
+router.post(
+  "/buy-item",
+  auth,
+  validation(buyItemJoiSchema),
+  ctrlWrapper(ctrl.buyItem)
+);
+
+router.put(
+  "/sell-item",
+  auth,
+  validation(buyItemJoiSchema),
+  ctrlWrapper(ctrl.sellItem)
+);
 
 module.exports = router;

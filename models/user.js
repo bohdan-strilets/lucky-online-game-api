@@ -64,8 +64,9 @@ const userSchema = Schema(
       type: Schema.Types.ObjectId,
       ref: "statistics",
     },
-    store: {
+    products: {
       type: Array,
+      default: [],
     },
   },
   { versionKey: false, timestamps: true }
@@ -112,6 +113,10 @@ const complexityJoiSchema = joi.object({
   bank: joi.number().required(),
 });
 
+const buyItemJoiSchema = joi.object({
+  id: joi.string().required(),
+});
+
 const User = model("user", userSchema);
 
 module.exports = {
@@ -124,4 +129,5 @@ module.exports = {
   changeJoiSchema,
   resetPasswordJoiSchema,
   complexityJoiSchema,
+  buyItemJoiSchema,
 };

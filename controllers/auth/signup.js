@@ -62,6 +62,7 @@ const signup = async (req, res) => {
         isVerified: result.isVerified,
         complexity: result.complexity,
         inGame: result.inGame,
+        products: result.products,
         createdAt: result.createdAt,
         updatedAt: result.updatedAt,
       },

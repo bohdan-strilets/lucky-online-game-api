@@ -14,6 +14,8 @@ const deleteSession = require("./deleteSession");
 const changeComplexity = require("./changeComplexity");
 const refreshUser = require("./refreshUser");
 const getAllUsers = require("./getAllUsers");
+const buyItem = require("./buyItem");
+const sellItem = require("./sellItem");
 
 module.exports = {
   changeAccount,
@@ -32,4 +34,6 @@ module.exports = {
   changeComplexity,
   refreshUser,
   getAllUsers,
+  buyItem,
+  sellItem,
 };
