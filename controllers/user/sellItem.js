@@ -1,10 +1,12 @@
-const { User } = require("../../models");
+const { User, Statistics } = require("../../models");
 
 const sellItem = async (req, res) => {
   const { _id } = req.user;
   const { index, price } = req.body;
 
+  const statistics = await Statistics.findOne({ owner: _id });
   const user = await User.findById(_id);
+
   const products = user.products;
 
   products.splice(index, 1);
@@ -13,6 +15,10 @@ const sellItem = async (req, res) => {
     { products, $inc: { bank: price } },
     { new: true }
   );
+
+  await Statistics.findByIdAndUpdate(statistics._id, {
+    $inc: { moneyEarned: price },
+  });
 
   return res.json({
     status: "ok",

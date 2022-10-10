@@ -1,4 +1,4 @@
-const { Store, User } = require("../../models");
+const { Store, User, Statistics } = require("../../models");
 
 const buyItem = async (req, res) => {
   const { id, price } = req.body;
@@ -6,6 +6,7 @@ const buyItem = async (req, res) => {
   const { _id, bank } = user;
 
   const item = await Store.findById(id);
+  const statistics = await Statistics.findOne({ owner: _id });
 
   if (!item) {
     return res.status(404).json({
@@ -29,6 +30,10 @@ const buyItem = async (req, res) => {
     { $push: { products: item }, $inc: { bank: price } },
     { new: true }
   );
+
+  await Statistics.findByIdAndUpdate(statistics._id, {
+    $inc: { moneySpent: Math.abs(price) },
+  });
 
   return res.json({
     status: "ok",
