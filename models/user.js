@@ -115,6 +115,12 @@ const complexityJoiSchema = joi.object({
 
 const buyItemJoiSchema = joi.object({
   id: joi.string().required(),
+  price: joi.number().max(-1).required(),
+});
+
+const sellItemJoiSchema = joi.object({
+  index: joi.number().min(0).required(),
+  price: joi.number().min(1).required(),
 });
 
 const User = model("user", userSchema);
@@ -130,4 +136,5 @@ module.exports = {
   resetPasswordJoiSchema,
   complexityJoiSchema,
   buyItemJoiSchema,
+  sellItemJoiSchema,
 };

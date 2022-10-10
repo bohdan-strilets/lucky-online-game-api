@@ -1,8 +1,9 @@
 const { Store, User } = require("../../models");
 
 const buyItem = async (req, res) => {
-  const { id } = req.body;
-  const { _id } = req.user;
+  const { id, price } = req.body;
+  const user = req.user;
+  const { _id, bank } = user;
 
   const item = await Store.findById(id);
 
@@ -14,9 +15,18 @@ const buyItem = async (req, res) => {
     });
   }
 
+  if (price > bank) {
+    return res.status(400).json({
+      status: "error",
+      code: 400,
+      message:
+        "There are not enough funds on your account to complete the operation.",
+    });
+  }
+
   const result = await User.findByIdAndUpdate(
     { _id },
-    { $push: { products: item } },
+    { $push: { products: item }, $inc: { bank: price } },
     { new: true }
   );
 
@@ -24,6 +34,7 @@ const buyItem = async (req, res) => {
     status: "ok",
     code: 200,
     products: result.products,
+    bank: result.bank,
   });
 };
 

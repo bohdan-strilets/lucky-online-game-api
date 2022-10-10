@@ -10,6 +10,7 @@ const {
   resetPasswordJoiSchema,
   complexityJoiSchema,
   buyItemJoiSchema,
+  sellItemJoiSchema,
 } = require("../models/user");
 
 const router = express.Router();
@@ -106,7 +107,7 @@ router.post(
 router.put(
   "/sell-item",
   auth,
-  validation(buyItemJoiSchema),
+  validation(sellItemJoiSchema),
   ctrlWrapper(ctrl.sellItem)
 );
 

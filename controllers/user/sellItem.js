@@ -2,15 +2,15 @@ const { User } = require("../../models");
 
 const sellItem = async (req, res) => {
   const { _id } = req.user;
-  const { id } = req.body;
+  const { index, price } = req.body;
 
   const user = await User.findById(_id);
   const products = user.products;
 
-  const arr = products.filter(({ _id }) => _id.toString() !== id);
+  products.splice(index, 1);
   const result = await User.findByIdAndUpdate(
     { _id },
-    { products: arr },
+    { products, $inc: { bank: price } },
     { new: true }
   );
 
@@ -18,6 +18,7 @@ const sellItem = async (req, res) => {
     status: "ok",
     code: 200,
     products: result.products,
+    bank: result.bank,
   });
 };
 
