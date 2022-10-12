@@ -20,7 +20,12 @@ const {
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(
+  cors({
+    origin: "https://lucky-online-game-api.herokuapp.com",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.static("./public"));
 app.use(cookieParser());
