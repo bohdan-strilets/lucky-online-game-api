@@ -33,7 +33,8 @@ const refreshUser = async (req, res) => {
     .cookie("refreshToken", tokens.refreshToken, {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
-      sameSite: "strict",
+      sameSite: "None",
+      secure: true,
     })
     .json({
       status: "ok",
