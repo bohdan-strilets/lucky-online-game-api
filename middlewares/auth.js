@@ -22,7 +22,7 @@ const auth = async (req, res, next) => {
       return res.status(401).json({
         status: "error",
         code: 401,
-        message: "Not authorized",
+        message: "Not authorized.",
       });
     }
 
@@ -32,7 +32,7 @@ const auth = async (req, res, next) => {
       return res.status(401).json({
         status: "error",
         code: 401,
-        message: "Not authorized",
+        message: "Not authorized.",
       });
     }
 
@@ -47,11 +47,11 @@ const auth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    if (error.message === "jwt expired") {
+    if (error.message === "jwt expired.") {
       return res.status(401).json({
         status: "error",
         code: 401,
-        message: "Not authorized",
+        message: "Not authorized.",
       });
     }
     next(error);
