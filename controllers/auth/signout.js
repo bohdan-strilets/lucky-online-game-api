@@ -28,7 +28,14 @@ const signout = async (req, res) => {
   const { _id } = await Token.findOne({ refreshToken });
   await Token.findByIdAndRemove(_id);
 
-  return res.clearCookie("refreshToken").status(204).json();
+  return res
+    .clearCookie("refreshToken", {
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+    })
+    .status(204)
+    .json();
 };
 
 module.exports = signout;
