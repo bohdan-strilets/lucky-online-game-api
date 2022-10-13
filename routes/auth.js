@@ -10,6 +10,6 @@ router.post("/signup", validation(signupJoiSchema), ctrlWrapper(ctrl.signup));
 
 router.post("/signin", validation(signinJoiSchema), ctrlWrapper(ctrl.signin));
 
-router.get("/signout", ctrlWrapper(ctrl.signout));
+router.get("/signout", auth, ctrlWrapper(ctrl.signout));
 
 module.exports = router;
