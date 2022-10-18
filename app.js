@@ -4,6 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
+const corsOptions = require("./corsOptions");
 
 require("dotenv").config();
 const app = express();
@@ -20,7 +21,7 @@ const {
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.static("./public"));
 app.use(cookieParser());
