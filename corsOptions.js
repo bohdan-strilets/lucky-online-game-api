@@ -1,5 +1,5 @@
 const whitelist = [
-  "https://bohdan-strilets.github.io/lucky-online-game/",
+  "https://bohdan-strilets.github.io",
   "http://localhost:3000",
 ];
 const corsOptions = {
