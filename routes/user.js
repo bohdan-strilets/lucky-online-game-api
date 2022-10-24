@@ -38,12 +38,7 @@ router.patch(
   ctrlWrapper(ctrl.changeBank)
 );
 
-router.patch(
-  "/change-avatar",
-  auth,
-  upload.single("avatar"),
-  ctrlWrapper(ctrl.changeAvatar)
-);
+router.post("/change-avatar", auth, upload.single("avatar"), ctrl.changeAvatar);
 
 router.patch(
   "/change-profile",
