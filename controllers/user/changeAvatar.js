@@ -23,7 +23,7 @@ const changeAvatar = async (req, res) => {
   try {
     const resultUpload = path.join(avatarsDir, imageName);
 
-    jimp
+    await jimp
       .read(tmpUpload)
       .then((image) => image.resize(250, 180).write(resultUpload))
       .catch((error) => console.log(error));
@@ -41,12 +41,18 @@ const changeAvatar = async (req, res) => {
       avatarURL: cloudinaryRes.url,
     });
 
+    if (cloudinaryRes) {
+      fs.unlink(resultUpload);
+    }
+
     return res.json({
       status: "ok",
       code: 200,
       avatarURL: cloudinaryRes.url,
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports = changeAvatar;
