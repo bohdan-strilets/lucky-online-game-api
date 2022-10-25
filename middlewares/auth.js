@@ -17,6 +17,7 @@ const auth = async (req, res, next) => {
     }
 
     const { email } = jwt.verify(token, ACCESS_TOKEN_KEY);
+    console.log(email);
 
     if (!email) {
       return res.status(401).json({
@@ -47,7 +48,7 @@ const auth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    if (error.message === "jwt expired.") {
+    if (error.message === "jwt expired") {
       return res.status(401).json({
         status: "error",
         code: 401,
