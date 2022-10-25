@@ -6,7 +6,6 @@ const {
   tokenGenerator,
 } = require("../../helpers");
 
-const path = require("path");
 const { hashSync, genSaltSync } = require("bcryptjs");
 const { v4 } = require("uuid");
 
@@ -23,7 +22,8 @@ const signup = async (req, res) => {
   }
 
   const verificationToken = v4();
-  const avatarURL = path.join("avatars", "defaultAvatar.jpg");
+  const avatarURL =
+    "https://res.cloudinary.com/ddd1vgg5b/image/upload/v1666667828/avatars/unahnrhihbtxr2zfmlqs.jpg";
   const hashPassword = hashSync(password, genSaltSync(10));
 
   const result = await User.create({
