@@ -48,7 +48,7 @@ const auth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    if (error.message === "jwt expired") {
+    if (error.message === "jwt expired" || error.message === "jwt malformed") {
       return res.status(401).json({
         status: "error",
         code: 401,
