@@ -4,7 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
-const { corsOptions } = require("./options");
+// const { corsOptions } = require("./options");
 
 require("dotenv").config();
 const app = express();
@@ -21,7 +21,12 @@ const {
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: "https://bohdan-strilets.github.io/lucky-online-game/",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.static("./public"));
 app.use(cookieParser());
