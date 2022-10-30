@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "version": "1.1.0",
+    "version": "1.7.40",
     "title": "Lucky online-game API",
-    "description": "Documentation for the online game.",
+    "description": "Documentation for the online game - LUCKY.",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
@@ -11,7 +11,7 @@
   },
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "servers": [{ "url": "http://localhost:5000" }],
+  "servers": [{ "url": "https://lucky-online-game-api.herokuapp.com" }],
   "tags": [
     {
       "name": "Auth",
@@ -32,17 +32,21 @@
     {
       "name": "Statistics",
       "description": "Statistics endpoints"
+    },
+    {
+      "name": "Store",
+      "description": "Store endpoints"
     }
   ],
   "paths": {
     "/api/v1/auth/signup": {
       "post": {
         "tags": ["Auth"],
-        "summary": "User registration",
+        "summary": "New user registration.",
         "parameters": [],
         "security": [],
         "requestBody": {
-          "description": "Registration object",
+          "description": "New user.",
           "required": true,
           "content": {
             "application/json": {
@@ -52,20 +56,1052 @@
             }
           }
         },
-        "response": {
+        "responses": {
           "201": {
-            "description": "Successful operation",
+            "description": "Successful operation.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
+                  "$ref": "#/components/schemas/AuthorizationResponse"
                 }
               }
             }
           },
           "409": {
-            "description": "Email in use",
-            "content": {}
+            "description": "Email in use.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/signin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Authorization of an already registered user.",
+        "parameters": [],
+        "security": [],
+        "requestBody": {
+          "description": "logged in user.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully logged in.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email is wrong or password is wrong or account not verify.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/signout": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Signed out user.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "204": {
+            "description": "User successfully logged out."
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/get-current": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get current user.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Data of the current user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/change-email": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Change email adress.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Change the user's email address.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangeEmailResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/change-password": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Change password user.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Change the user's password.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoBodyResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Password is wrong.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/change-bank": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Change user's bank.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Amount to be changed.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeBankRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangeBankResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/change-avatar": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Change user's avatar.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "User's avatar.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeAvatarRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangeAvatarResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/change-profile": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Change user's profile.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "User's data.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeProfileRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangeProfileResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/verification-email/:verificationToken": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Verification user's email adress.",
+        "parameters": [
+          {
+            "-in": "path",
+            "name": "verificationToken",
+            "schema": {
+              "type": "string",
+              "required": true,
+              "description": "Account verification token."
+            }
+          }
+        ],
+        "security": [],
+        "requestBody": {},
+        "responses": {
+          "301": {
+            "description": "Redirect user after validating email."
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/repeat-verification": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Repeat verification user's email adress.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Create a new game session.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoBodyResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/delete-account": {
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete account.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoBodyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/send-password-email": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Send email for reset user's password.",
+        "parameters": [],
+        "security": [],
+        "requestBody": {
+          "description": "User's email.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoBodyResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email is wrong. Such a user does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/reset-password": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Reset user password.",
+        "parameters": [],
+        "security": [],
+        "requestBody": {
+          "description": "User's email and password.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoBodyResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid email. There is no user with this email address.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/new-session": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Create a new game session.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Complexity and bank.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComplexityRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComplexityResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/change-complexity": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Change complexity level.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Complexity and bank.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComplexityRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangeComplexityResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/refresh-user": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Refresh token for current user.",
+        "parameters": [],
+        "security": [],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefreshUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/delete-session": {
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete current game session.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoBodyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/get-all-users": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get all register users.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllUsersResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/buy-item": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Buy item in store.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Item's id and price.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyItemRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuySellItemResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "A product with this ID does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "There are not enough funds on your account to complete the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/sell-item": {
+      "put": {
+        "tags": ["User"],
+        "summary": "Sell item with private collection.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Item's index and price.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SellItemRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuySellItemResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/bets/get-all": {
+      "get": {
+        "tags": ["Bets"],
+        "summary": "Get all user's bets.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllBetsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/bets/get-one/:betId": {
+      "get": {
+        "tags": ["Bets"],
+        "summary": "Get one user's bet.",
+        "parameters": [
+          {
+            "-in": "path",
+            "name": "betId",
+            "schema": {
+              "type": "string",
+              "required": true,
+              "description": "Bet's id."
+            }
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BetResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/bets/create-bet": {
+      "post": {
+        "tags": ["Bets"],
+        "summary": "Create a new bet.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Bet info.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BetResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The game session has not been created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/bets/change-bet/:betId": {
+      "put": {
+        "tags": ["Bets"],
+        "summary": "Change current bet.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Won status.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeBetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BetResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The selected bet cannot be changed because the value of the isWon field is already positive.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/level/": {
+      "get": {
+        "tags": ["Level"],
+        "summary": "Get level info.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LevelInfoResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/level/change-level": {
+      "patch": {
+        "tags": ["Level"],
+        "summary": "Change level.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangeLevelResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/level/change-experience": {
+      "patch": {
+        "tags": ["Level"],
+        "summary": "Change rank.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "User's rank.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeExperienceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangeExperienceResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/level/change-rank": {
+      "patch": {
+        "tags": ["Level"],
+        "summary": "Change rank.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Won status.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeRankRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangeRankResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/statistics/": {
+      "get": {
+        "tags": ["Statistics"],
+        "summary": "Get statistics info.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatisticsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/store/": {
+      "get": {
+        "tags": ["Store"],
+        "summary": "Get all items in store.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllItemsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/store/:itemId": {
+      "get": {
+        "tags": ["Store"],
+        "summary": "Get one item info.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemsResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/store/add-item": {
+      "post": {
+        "tags": ["Store"],
+        "summary": "Create new item in store.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Item's info.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateItemRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A product with the same name already exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -94,31 +1130,543 @@
           }
         }
       },
-      "RegistrationResponse": {
+      "AuthorizationRequest": {
+        "type": "object",
+        "required": ["name", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password (6 to 12 characters)",
+            "example": "qwe123"
+          }
+        }
+      },
+      "AuthorizationResponse": {
         "type": "object",
         "properties": {
           "status": { "type": "string" },
           "code": { "type": "integer" },
-          "tokens": {
-            "accessToken": { "type": "string" },
-            "refreshToken": { "type": "string" }
+          "tokens": { "$ref": "#/components/schemas/Tokens" },
+          "user": { "$ref": "#/components/schemas/User" }
+        }
+      },
+      "Tokens": {
+        "type": "object",
+        "properties": {
+          "accessToken": { "type": "string" },
+          "refreshToken": { "type": "string" }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "name": { "type": "string" },
+          "nickname": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "dateBirth": { "type": "string" },
+          "gender": { "type": "string" },
+          "bank": { "type": "number" },
+          "avatarURL": { "type": "string" },
+          "isVerified": { "type": "boolean" },
+          "complexity": { "type": "string" },
+          "inGame": { "type": "boolean" },
+          "products": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/StoreItem" }
           },
-          "user": {
-            "_id": { "type": "string" },
-            "name": { "type": "string" },
-            "nickname": { "type": "string" },
-            "email": { "type": "string", "format": "email" },
-            "dateBirth": { "type": "string" },
-            "gender": { "type": "string" },
-            "bank": { "type": "number" },
-            "avatarURL": { "type": "string" },
-            "isVerified": { "type": "boolean" },
-            "complexity": { "type": "string" },
-            "inGame": { "type": "boolean" },
-            "createdAt": { "type": "string" },
-            "updatedAt": { "type": "string" }
+          "createdAt": { "type": "string" },
+          "updatedAt": { "type": "string" }
+        }
+      },
+      "StoreItem": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "price": { "type": "number" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "imageURL": { "type": "string" },
+          "createdAt": { "type": "string" },
+          "updatedAt": { "type": "string" }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "message": { "type": "string" }
+        }
+      },
+      "ChangeEmailResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "email": { "type": "string", "format": "email" },
+          "message": { "type": "string" }
+        }
+      },
+      "EmailRequest": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
           }
         }
+      },
+      "NoBodyResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "message": { "type": "string" }
+        }
+      },
+      "ChangePasswordRequest": {
+        "type": "object",
+        "required": ["password", "newPassword"],
+        "properties": {
+          "password": {
+            "type": "string",
+            "description": "Old user's password.",
+            "example": "qwe123"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "New user's password.",
+            "example": "qwe123"
+          }
+        }
+      },
+      "ChangeBankResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "bank": { "type": "number" }
+        }
+      },
+      "ChangeBankRequest": {
+        "type": "object",
+        "required": ["bank"],
+        "properties": {
+          "bank": {
+            "type": "number",
+            "description": "Quantity money on account.",
+            "example": 740
+          }
+        }
+      },
+      "ChangeAvatarResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "avatarURL": { "type": "string" }
+        }
+      },
+      "ChangeAvatarRequest": {
+        "type": "object",
+        "required": ["avatar"],
+        "properties": {
+          "avatar": {
+            "type": "string",
+            "format": "binary",
+            "description": "Images for upload."
+          }
+        }
+      },
+      "ChangeProfileResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "user": { "$ref": "#/components/schemas/ProfileData" }
+        }
+      },
+      "ProfileData": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "nickname": { "type": "string" },
+          "dateBirth": { "type": "string" },
+          "gender": { "type": "string" },
+          "updatedAt": { "type": "string" }
+        }
+      },
+      "ChangeProfileRequest": {
+        "type": "object",
+        "required": ["name", "nickname", "dateBirth", "gender"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User name.",
+            "example": "Boby"
+          },
+          "nickname": {
+            "type": "string",
+            "description": "User nickname.",
+            "example": "sun44"
+          },
+          "dateBirth": {
+            "type": "string",
+            "description": "User dateBirth.",
+            "example": "1999-12-23"
+          },
+          "gender": {
+            "type": "string",
+            "description": "User gender."
+          }
+        }
+      },
+      "ResetPasswordRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password (6 to 12 characters)",
+            "example": "qwe123"
+          }
+        }
+      },
+      "ComplexityRequest": {
+        "type": "object",
+        "required": ["complexity", "bank"],
+        "properties": {
+          "complexity": {
+            "type": "string",
+            "description": "Complexity level.",
+            "example": "low, medium, high"
+          },
+          "bank": {
+            "type": "number",
+            "description": "Quantity money for start."
+          }
+        }
+      },
+      "ComplexityResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "user": { "$ref": "#/components/schemas/ComplexityUser" }
+        }
+      },
+      "ComplexityUser": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "email": { "type": "string" },
+          "complexity": { "type": "string" },
+          "bank": { "type": "number" },
+          "inGame": { "type": "boolean" }
+        }
+      },
+      "ChangeComplexityResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "complexity": { "type": "string" },
+          "bank": { "type": "integer" }
+        }
+      },
+      "RefreshUserResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "tokens": { "$ref": "#/components/schemas/Tokens" }
+        }
+      },
+      "GetAllUsersResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "allUsers": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/User" }
+          },
+          "page": { "type": "integer" },
+          "limit": { "type": "integer" },
+          "total": { "type": "integer" }
+        }
+      },
+      "BuyItemRequest": {
+        "type": "object",
+        "required": ["id", "price"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Item's id."
+          },
+          "price": {
+            "type": "number",
+            "description": "Price per item."
+          }
+        }
+      },
+      "BuySellItemResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "products": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/StoreItem" }
+          },
+          "bank": { "type": "integer" }
+        }
+      },
+      "SellItemRequest": {
+        "type": "object",
+        "required": ["id", "price"],
+        "properties": {
+          "index": {
+            "type": "integer",
+            "description": "Item's index."
+          },
+          "price": {
+            "type": "number",
+            "description": "Price per item."
+          }
+        }
+      },
+      "GetAllBetsResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "bets": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Bet" }
+          },
+          "page": { "type": "integer" },
+          "limit": { "type": "integer" },
+          "total": { "type": "integer" }
+        }
+      },
+      "Bet": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "owner": { "$ref": "#/components/schemas/Owner" },
+          "betAmount": { "type": "number" },
+          "coefficient": { "type": "number" },
+          "color": { "type": "string" },
+          "isWon": { "type": "boolean" },
+          "number": { "type": "integer" },
+          "type": { "type": "string" },
+          "winningAmount": { "type": "number" },
+          "updatedAt": { "type": "string" },
+          "createdAt": { "type": "string" }
+        }
+      },
+      "Owner": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "name": { "type": "string" },
+          "avatarURL": { "type": "string" }
+        }
+      },
+      "BetResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "bet": { "$ref": "#/components/schemas/Bet" }
+        }
+      },
+      "CreateBetRequest": {
+        "type": "object",
+        "required": ["type", "betAmount", "coefficient"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Rate type."
+          },
+          "number": {
+            "type": "number",
+            "description": "The number chosen by the player."
+          },
+          "color": {
+            "type": "string",
+            "description": "Selected color."
+          },
+          "betAmount": {
+            "type": "number",
+            "description": "Selected amount to bet."
+          },
+          "coefficient": {
+            "type": "number",
+            "description": "Rate coefficient."
+          }
+        }
+      },
+      "ChangeBetRequest": {
+        "type": "object",
+        "required": ["isWon"],
+        "properties": {
+          "isWon": {
+            "type": "boolean",
+            "description": "Rate status."
+          }
+        }
+      },
+      "LevelInfoResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "level": { "$ref": "#/components/schemas/Level" }
+        }
+      },
+      "Level": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "owner": { "type": "string" },
+          "level": { "type": "number" },
+          "experience": { "type": "number" },
+          "rank": { "type": "string" },
+          "createdAt": { "type": "string" },
+          "updatedAt": { "type": "string" }
+        }
+      },
+      "ChangeLevelResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "level": { "type": "number" }
+        }
+      },
+      "ChangeExperienceRequest": {
+        "type": "object",
+        "required": ["experience"],
+        "properties": {
+          "experience": {
+            "type": "number",
+            "description": "The amount of experience."
+          }
+        }
+      },
+      "ChangeExperienceResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "experience": { "type": "number" }
+        }
+      },
+      "ChangeRankRequest": {
+        "type": "object",
+        "required": ["rank"],
+        "properties": {
+          "rank": {
+            "type": "string",
+            "description": "User's rank."
+          }
+        }
+      },
+      "ChangeRankResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "rank": { "type": "string" }
+        }
+      },
+      "StatisticsResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "statistics": { "$ref": "#/components/schemas/Statistics" }
+        }
+      },
+      "Statistics": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "owner": { "type": "string" },
+          "totalBets": { "type": "integer" },
+          "wonBets": { "type": "integer" },
+          "lostBets": { "type": "integer" },
+          "moneySpent": { "type": "integer" },
+          "moneyEarned": { "type": "integer" },
+          "createdAt": { "type": "string" },
+          "updatedAt": { "type": "string" }
+        }
+      },
+      "GetAllItemsResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "items": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/StoreItem" }
+          },
+          "page": { "type": "integer" },
+          "limit": { "type": "integer" },
+          "total": { "type": "integer" }
+        }
+      },
+      "ItemsResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "code": { "type": "integer" },
+          "item": { "$ref": "#/components/schemas/StoreItem" }
+        }
+      },
+      "CreateItemRequest": {
+        "type": "object",
+        "required": ["price", "title", "description", "imageURL"],
+        "properties": {
+          "price": {
+            "type": "number",
+            "description": "Item's price."
+          },
+          "title": {
+            "type": "string",
+            "description": "Item's title."
+          },
+          "description": {
+            "type": "string",
+            "description": "Item's description."
+          },
+          "imageURL": {
+            "type": "string",
+            "description": "Item's url."
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }

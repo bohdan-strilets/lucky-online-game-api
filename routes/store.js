@@ -10,6 +10,11 @@ router.get("/", auth, ctrlWrapper(ctrl.getAll));
 
 router.get("/:itemId", auth, ctrlWrapper(ctrl.getOne));
 
-router.post("/", auth, validation(itemJoiSchema), ctrlWrapper(ctrl.addOne));
+router.post(
+  "/add-item",
+  auth,
+  validation(itemJoiSchema),
+  ctrlWrapper(ctrl.addOne)
+);
 
 module.exports = router;

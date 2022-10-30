@@ -6,14 +6,19 @@ const { betJoiSchema, isWonJoiSchema } = require("../models/bet");
 
 const router = express.Router();
 
-router.get("/", auth, ctrlWrapper(ctrl.getAll));
+router.get("/get-all", auth, ctrlWrapper(ctrl.getAll));
 
-router.get("/:betId", auth, ctrlWrapper(ctrl.getOne));
+router.get("/get-one/:betId", auth, ctrlWrapper(ctrl.getOne));
 
-router.post("/", auth, validation(betJoiSchema), ctrlWrapper(ctrl.createBet));
+router.post(
+  "/create-bet",
+  auth,
+  validation(betJoiSchema),
+  ctrlWrapper(ctrl.createBet)
+);
 
 router.put(
-  "/:betId",
+  "/change-bet/:betId",
   auth,
   validation(isWonJoiSchema),
   ctrlWrapper(ctrl.changeBet)
