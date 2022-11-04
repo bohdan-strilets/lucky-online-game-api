@@ -23,6 +23,7 @@ app.use(logger(formatsLogger));
 app.use(
   cors({
     origin: "https://bohdan-strilets.github.io",
+    // origin: "http://localhost:3000",
     credentials: true,
   })
 );
