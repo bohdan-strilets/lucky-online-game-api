@@ -19,7 +19,7 @@ const verifyAccount = async (req, res) => {
     verificationToken: null,
   });
 
-  return res.redirect(`${CLIENT_URL}/lucky-online-game/profile`);
+  return res.redirect(`${CLIENT_URL}profile`);
 };
 
 module.exports = verifyAccount;
