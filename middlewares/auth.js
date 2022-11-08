@@ -37,14 +37,6 @@ const auth = async (req, res, next) => {
       });
     }
 
-    if (!user.isVerified) {
-      return res.status(400).json({
-        status: "error",
-        code: 400,
-        message: "Email not activated.",
-      });
-    }
-
     req.user = user;
     next();
   } catch (error) {
