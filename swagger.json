@@ -11,7 +11,7 @@
   },
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "servers": [{ "url": "https://lucky-online-game-api.herokuapp.com" }],
+  "servers": [{ "url": "https://lucky-online-game-api-ux53.onrender.com" }],
   "tags": [
     {
       "name": "Auth",
